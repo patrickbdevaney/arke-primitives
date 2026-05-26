@@ -1,0 +1,26 @@
+{
+  // TypeScript config for the Next.js App Router frontend.
+  // The Foundry project under contracts/ is Solidity, so it is excluded below.
+  "compilerOptions": {
+    "target": "ES2020", // ES2020 enables BigInt literals (e.g. 0n), which viem uses everywhere
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true, // teaching repo: strict mode on, so the examples model good practice
+    "noEmit": true, // Next handles emit; tsc is only used for type-checking
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [{ "name": "next" }],
+    // "@/..." resolves to "src/...". Keeps imports short and refactor-friendly.
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules", "contracts"]
+}

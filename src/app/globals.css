@@ -1,0 +1,13 @@
+/* Tailwind layers. This is the only global CSS in the kit — every component
+   styles itself with utility classes. */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply bg-white text-gray-900 antialiased;
+}

@@ -1,0 +1,24 @@
+# Node / Next.js
+node_modules/
+.next/
+out/
+build/
+*.tsbuildinfo
+next-env.d.ts
+
+# Local env files — NEVER commit real keys. Only .env.example is tracked.
+.env
+.env.local
+.env.*.local
+
+# Foundry build artifacts (the contracts/lib dependencies ARE committed so the
+# repo builds out of the box; only the generated artifacts are ignored).
+contracts/out/
+contracts/cache/
+contracts/broadcast/
+
+# OS / editor
+.DS_Store
+*.log
+.vscode/
+.idea/

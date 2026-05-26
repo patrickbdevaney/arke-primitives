@@ -1,0 +1,20 @@
+# Foundry config for the AttestationOracle contract.
+# Run `forge build` and `forge test` from inside contracts/.
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]            # forge-std is vendored under lib/ so the repo builds offline
+solc = "0.8.20"           # pinned; matches the pragma in the contract
+optimizer = true
+optimizer_runs = 200
+
+# Named RPC endpoints for `forge script ... --rpc-url arc_testnet`.
+# Arc pays gas in USDC (6 decimals). For complex calls, gas estimation can come
+# in LOW — pass a manual --gas-limit when a deploy/tx underestimates (the
+# estimation gotcha this kit's reference implementation hit on Arc).
+[rpc_endpoints]
+arc_testnet = "https://rpc.testnet.arc.network"
+
+# Contract verification on Arcscan is optional and needs an API key, so it is
+# intentionally not configured here (this kit ships with no secrets). If/when
+# Arcscan exposes a verify API, add an [etherscan] entry with your own key.
