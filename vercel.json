@@ -1,0 +1,15 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "framework": "nextjs",
+  "regions": ["iad1"],
+  "env": {
+    "NEXT_PUBLIC_ARC_RPC_URL": "",
+    "NEXT_PUBLIC_ORACLE_ADDRESS": "",
+    "NEXT_PUBLIC_ERC8004_AGENT_ID": "",
+    "X402_PAY_TO": "",
+    "X402_ASSET": "",
+    "POLY_BUILDER_CODE": "",
+    "ORDER_RELAY_URL": ""
+  }
+}

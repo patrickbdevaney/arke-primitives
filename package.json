@@ -8,7 +8,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "setup": "node -e \"const fs=require('fs');if(!fs.existsSync('.env.local')){fs.copyFileSync('.env.example','.env.local');console.log('Created .env.local from .env.example — edit it to override defaults.')}else{console.log('.env.local already exists — skipping.')}console.log('\\nNext: npm run dev → http://localhost:3000')\""
   },
   "dependencies": {
     "@tanstack/react-query": "^5.59.16",

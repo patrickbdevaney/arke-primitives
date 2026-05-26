@@ -1,5 +1,10 @@
 # arc-agent-starter
 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/patrickbdevaney/arke-primitives)
+
+> Fork and deploy in 3 minutes — zero env vars required to start.
+> Full deploy guide → [`DEPLOYING.md`](DEPLOYING.md)
+
 A forkable Next.js + wagmi/viem starter kit for building autonomous agents on
 Arc — **ERC-8004 identity, x402 payments, builder-code attribution, session
 keys, and an onchain attestation oracle**. Every primitive runs out of the box
@@ -27,11 +32,11 @@ on its own.
 ## Quickstart
 
 ```bash
-git clone https://github.com/patrickbdevaney/arc-agent-starter
-cd arc-agent-starter
+git clone https://github.com/patrickbdevaney/arke-primitives
+cd arke-primitives
 npm install
-cp .env.example .env.local        # works untouched; fill values only to override defaults
-npm run dev                       # http://localhost:3000
+npm run setup      # creates .env.local — edit to override defaults (optional)
+npm run dev        # http://localhost:3000
 ```
 
 Then get a little **testnet USDC** from the Arc faucet (you pay gas in USDC —
@@ -140,17 +145,10 @@ High-value pedagogy — these are the things that cost hours if nobody warns you
 
 ## Deploy your own
 
-**Oracle (Foundry → Arc testnet):**
-
-```bash
-cd contracts
-export PRIVATE_KEY=0x...   # throwaway testnet key only
-forge script script/Deploy.s.sol:Deploy --rpc-url arc_testnet --broadcast
-# copy the printed address into .env.local as NEXT_PUBLIC_ORACLE_ADDRESS
-```
-
-**Frontend (Vercel):** import the repo, set the env vars from `.env.example`
-that you actually use, and deploy. No build configuration needed.
+See [`DEPLOYING.md`](DEPLOYING.md) for three deployment paths:
+- **Vercel only** (3 min, no backend) — one-click deploy button above.
+- **Local dev** (5 min) — `npm install && npm run dev`.
+- **With oracle** (10 min) — deploy the Foundry contract, point the dashboard at it.
 
 ---
 

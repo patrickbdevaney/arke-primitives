@@ -124,6 +124,13 @@ export async function GET(req: NextRequest) {
     return NextResponse.json(
       {
         unlocked: true,
+        // Surface the demo-vs-production distinction inline so a learner isn't
+        // confused about whether money actually moved. With X402_PAY_TO set you
+        // are running the "real recipient" path (a facilitator would settle the
+        // EIP-3009 authorization onchain); without it, it's signature-only.
+        x402Mode: process.env.X402_PAY_TO
+          ? "signature-verified (facilitator would settle onchain in production)"
+          : "demo (no X402_PAY_TO set — signature verified locally only)",
         paidBy: auth.from,
         feed: [
           { t: now, signal: "ARC/USDC momentum: long", confidence: 0.71 },

@@ -13,6 +13,7 @@
 import { useEffect, useState } from "react";
 import { createPublicClient, http, isAddress, type Address } from "viem";
 import { arcTestnet } from "@/lib/arc";
+import { ORACLE_ADDRESS, ORACLE_DEPLOYED } from "@/lib/config";
 
 // The reads we need. The public array getter `attestations(uint256)` returns the
 // struct fields as a tuple, in declaration order.
@@ -52,7 +53,9 @@ interface Row {
 }
 
 export function OracleTable() {
-  const oracleAddress = process.env.NEXT_PUBLIC_ORACLE_ADDRESS;
+  // Env-var source of truth lives in @/lib/config so the whole app's config
+  // surface is discoverable in one file. ORACLE_DEPLOYED gates the empty state.
+  const oracleAddress = ORACLE_ADDRESS;
   const [rows, setRows] = useState<Row[]>([]);
   const [status, setStatus] = useState<"idle" | "loading" | "done" | "error">("idle");
   const [error, setError] = useState<string | null>(null);
@@ -110,21 +113,35 @@ export function OracleTable() {
     };
   }, [oracleAddress]);
 
-  // No address configured → show the deploy path instead of an error.
-  if (!oracleAddress || !isAddress(oracleAddress)) {
+  // No oracle deployed yet → render a friendly, actionable empty state instead
+  // of a blank table, so a first-time forker knows this is config (not a bug).
+  if (!ORACLE_DEPLOYED) {
     return (
-      <div className="rounded-lg border border-dashed border-gray-300 p-4 text-sm text-gray-600">
-        <p className="mb-2 font-semibold">No oracle configured yet.</p>
-        <p>Deploy the contract, then set its address so this page can read it:</p>
-        <pre className="mt-2 overflow-x-auto rounded bg-gray-900 p-3 text-xs text-gray-100">
+      <div className="space-y-3 rounded-lg border border-dashed border-gray-300 p-5 text-sm text-gray-600">
+        <p className="font-semibold text-gray-800">No oracle deployed yet.</p>
+        <p>
+          Deploy one in ~2 minutes with Foundry and point the dashboard at it. No
+          frontend changes needed — just an env var.
+        </p>
+        <pre className="overflow-x-auto rounded bg-gray-900 p-3 text-xs text-gray-100">
           {`cd contracts
-forge create src/AttestationOracle.sol:AttestationOracle \\
-  --rpc-url https://rpc.testnet.arc.network \\
-  --private-key $PRIVATE_KEY --broadcast
-
-# then in .env.local:
-NEXT_PUBLIC_ORACLE_ADDRESS=0xYourDeployedOracle`}
+export PRIVATE_KEY=0x<your throwaway testnet key>
+forge script script/Deploy.s.sol:Deploy --rpc-url arc_testnet --broadcast`}
         </pre>
+        <p>
+          Copy the printed address into your <code>.env.local</code> as{" "}
+          <code>NEXT_PUBLIC_ORACLE_ADDRESS</code> and restart the dev server.
+        </p>
+        <p>
+          Full walkthrough →{" "}
+          <a className="text-arc underline" href="https://github.com/patrickbdevaney/arke-primitives/blob/main/docs/01-arc-setup.md">
+            docs/01-arc-setup.md
+          </a>
+        </p>
+        <p className="text-xs text-gray-400">
+          Note: no wallet or USDC needed to READ an oracle — only the deploy step
+          requires a funded key.
+        </p>
       </div>
     );
   }

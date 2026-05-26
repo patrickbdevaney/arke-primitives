@@ -137,6 +137,17 @@ function useX402Fetch(url: string) {
   return { ...state, run };
 }
 
+// The success payload may carry an `x402Mode` string from the API route
+// describing whether this was real-recipient or signature-only. `data` is typed
+// `unknown`, so narrow it safely before reading the field.
+function x402ModeOf(data: unknown): string | null {
+  if (typeof data === "object" && data !== null && "x402Mode" in data) {
+    const mode = (data as { x402Mode?: unknown }).x402Mode;
+    return typeof mode === "string" ? mode : null;
+  }
+  return null;
+}
+
 const STEPS = ["idle", "challenged", "signing", "paying", "done"] as const;
 
 export function X402Fetch() {
@@ -193,6 +204,9 @@ export function X402Fetch() {
           <pre className="overflow-x-auto rounded bg-gray-900 p-3 text-xs text-gray-100">
             {JSON.stringify(data, null, 2)}
           </pre>
+          {x402ModeOf(data) && (
+            <p className="mt-2 text-xs text-gray-400">{x402ModeOf(data)}</p>
+          )}
         </div>
       )}
 

@@ -84,6 +84,37 @@ export default function Home() {
           </Link>
         ))}
       </section>
+
+      <section className="rounded-lg border border-dashed border-gray-300 p-6">
+        <h2 className="font-semibold text-gray-800">Deploy your own</h2>
+        <p className="mt-2 text-sm text-gray-600 max-w-xl">
+          Fork this repo and deploy to Vercel in under 3 minutes — no backend
+          required. The app runs with zero env vars; fill them in when you need
+          a specific primitive.
+        </p>
+        <div className="mt-4 flex flex-wrap gap-3">
+          <a
+            href="https://vercel.com/new/clone?repository-url=https://github.com/patrickbdevaney/arke-primitives"
+            className="inline-block rounded bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Deploy to Vercel ↗
+          </a>
+          <a
+            href="https://github.com/patrickbdevaney/arke-primitives"
+            className="inline-block rounded border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:border-gray-500"
+            target="_blank"
+            rel="noreferrer"
+          >
+            View on GitHub ↗
+          </a>
+        </div>
+        <p className="mt-4 text-xs text-gray-400">
+          Built for <a href="https://arke.live" className="underline">Arke</a> ·
+          Arc OSS · Agora Agents Hackathon · MIT
+        </p>
+      </section>
     </div>
   );
 }
